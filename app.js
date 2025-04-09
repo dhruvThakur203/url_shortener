@@ -5,7 +5,7 @@ import path from "path";
 import { json } from "stream/consumers"
 // import { writeFile } from "fs";
 
-const PORT = 3002; 
+const PORT = 3003; 
 
 const DATA_FILE = path.join("data","links.json");
 
