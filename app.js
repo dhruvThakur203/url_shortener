@@ -1,5 +1,5 @@
 import { readFile , writeFile } from "fs/promises";
-import { createServer } from "http";
+import { createServer } from "https";
 import crypto from "crypto";
 import path from "path";
 import { json } from "stream/consumers"
@@ -97,5 +97,5 @@ const server = createServer(async (req, res) => {
 });
 
 server.listen(PORT, () => {
-    console.log(`server running at http://localhost:${PORT}`);
+    console.log(`server running at https://localhost:${PORT}`);
 });
