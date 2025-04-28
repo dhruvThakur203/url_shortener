@@ -29,14 +29,18 @@
 <!-- 
             Object.entries(links).map(([shortCode,url])=>`<li><a href="/${shortCode}" target="_blank">${hostname}/${shortCode}</a> - ${url}</li>`).join("") -->
     
-          <%  Object.entries(links).map(([shortCode,url])=>{ %>
-            <% const truncatedURL = url.length >= 30 ? `${url.slice(0,30)}...` : url %>
-            <li>
-                <a href="/<%= shortCode%>" target="_blank">
-                    <%= host %>/<%= shortCode %>
-                </a> - <%= url %>
-            </li>
-        <% })%>
+            <% links.map(({ shortCode, url }) => { %>
+                <% if (url) { %>
+                    <% const truncatedURL = url.length >= 30 ? `${url.slice(0, 30)}...` : url; %>
+                    <li>
+                        <a href="/<%= shortCode %>" target="_blank">
+                            <%= host %>/<%= shortCode %>
+                        </a>
+                        <p>Original URL: <%= truncatedURL %></p>
+                    </li>
+                <% } %>
+            <% }) %>
+            
         </ul> 
     </div>
 
