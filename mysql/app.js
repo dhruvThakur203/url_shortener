@@ -1,14 +1,15 @@
-import mysql from "mysql2/promise";
+// import mysql from "mysql2/promise";
 
-//1 : to connect to mysql server
-const db  = await mysql.createConnection({
-    host: "localhost",
-    user:"root",
-    password:"Th@kur3g",
-    database:"mysql_db",
-})
+// //1 : to connect to mysql server
+// const db  = await mysql.createConnection({
+//     host: "localhost",
+//     user:"root",
+//     password:"Th@kur3g",
+//     database:"mysql_db",
+// })
 
-console.log("MySQL Connected Successfully");
+// console.log("MySQL Connected Successfully");
+
 //2 : we need to create a db
 // await db.execute(`create database mysql_db`);
 // console.log(await db.execute("show databases"))

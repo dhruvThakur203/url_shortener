@@ -30,31 +30,61 @@
 
 // const shortenerCollection = db.collection("shorteners");
 
-import { db } from "../config/db-client.js";
+// import { db } from "../config/db-client.js";
 
-export const loadLinks = async () =>{
-    // return shortenerCollection.find().toArray(); //mongodb
+// export const loadLinks = async () =>{
+//     // return shortenerCollection.find().toArray(); //mongodb
 
-   const [rows] = await db.execute("select * from  short_links");
-   return rows;
+//    const [rows] = await db.execute("select * from  short_links");
+//    return rows;
 
-}
+// }
 
-export const saveLinks = async({url,shortCode})=>{
-    // return shortenerCollection.insertOne(link); //,MONGODB
-    const [result] = await db.execute("insert into short_links(short_code,url) values(?,?)",[shortCode, url]);
-        return result;
+// export const saveLinks = async({url,shortCode})=>{
+//     // return shortenerCollection.insertOne(link); //,MONGODB
+//     const [result] = await db.execute("insert into short_links(short_code,url) values(?,?)",[shortCode, url]);
+//         return result;
+// };
+
+// export const getLinkByShortCode = async(shortcode)=>{
+//     // return  await shortenerCollection.findOne({shortCode: shortcode});
+
+//     const [rows] = await db.execute(`select * from short_links where short_code = ?`,[shortcode]);
+
+//     if(rows.length>0){
+//         return rows[0];
+//     }else{
+//         return null;
+//     }
+
+// };
+
+import { db } from "../config/drizzleDB.js";
+import { shortLink } from "../drizzle/schema.js";
+import { eq } from "drizzle-orm";
+
+// Get all short links
+export const loadLinks = async () => {
+  const links = await db.select().from(shortLink);
+  return links;
 };
 
-export const getLinkByShortCode = async(shortcode)=>{
-    // return  await shortenerCollection.findOne({shortCode: shortcode});
+// Save a new short link
+export const saveLinks = async ({ url, shortCode }) => {
+  const result = await db.insert(shortLink).values({
+    url,
+    shortCode,
+  });
 
-    const [rows] = await db.execute(`select * from short_links where short_code = ?`,[shortcode]);
+  return result;
+};
 
-    if(rows.length>0){
-        return rows[0];
-    }else{
-        return null;
-    }
+// Get a link by its shortcode
+export const getLinkByShortCode = async (shortcode) => {
+  const result = await db
+    .select()
+    .from(shortLink)
+    .where(eq(shortLink.shortCode, shortcode));
 
+  return result.length > 0 ? result[0] : null;
 };
