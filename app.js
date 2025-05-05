@@ -1,6 +1,8 @@
 import {shortenerRoutes} from "./routes/shortener.routes.js";
 import express from "express";
 import { url } from "inspector";
+import { authRoutes } from "./routes/auth.routes.js";
+import cookieParser from "cookie-parser";
 
 
 
@@ -24,7 +26,12 @@ app.use(express.urlencoded({extended:true}));
 
 app.set("view engine","ejs");
 
+
+
+app.use(cookieParser());
+
 // express router
+app.use(authRoutes);
 app.use(shortenerRoutes);
 
 

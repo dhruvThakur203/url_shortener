@@ -1,105 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>URL Shortener</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>URL Shortener</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 </head>
-
 <body>
-    <div class="container">
-        <h1>URL Shortener</h1>
-        <form action="/" method="post">
-            <div>
-                <label for="url">Enter URL : </label>
-                <input type="url" name="url" id="url" required>
-            </div>
-            <div>
-                <label for="shortCode">Enter shortCode (optional) : </label>
-                <input type="text" name="shortCode" id="shortCode">
-            </div>
-            <button type="submit">Shorten</button>
-        </form>
-        <br>
-        <h2>Shortened URLs</h2>
-        <ul >
-            <!-- {{shortened_urls}} -->
-<!-- 
-            Object.entries(links).map(([shortCode,url])=>`<li><a href="/${shortCode}" target="_blank">${hostname}/${shortCode}</a> - ${url}</li>`).join("") -->
-    
-            <% links.map(({ shortCode, url }) => { %>
-                <% if (url) { %>
-                    <% const truncatedURL = url.length >= 30 ? `${url.slice(0, 30)}...` : url; %>
-                    <li>
-                        <a href="/<%= shortCode %>" target="_blank">
-                            <%= host %>/<%= shortCode %>
-                        </a>
-                        <p>Original URL: <%= truncatedURL %></p>
-                    </li>
-                <% } %>
-            <% }) %>
-            
-        </ul> 
+    <%- include('./partials/header.ejs') %> 
+<% if(isLoggedIn) { %>
+  <h2>You are logged In</h2>
+<% } else { %>
+  <h2>You are not logged In</h2>
+<% } %>
+
+
+  <main class="home-page">
+    <div class="url-container">
+      <h2>URL Shortener</h2>
+      <form action="/" method="post">
+        <input type="url" name="url" placeholder="Enter long URL" required />
+        <input type="text" name="shortCode" placeholder="Custom short code (optional)" />
+        <button type="submit">Shorten URL</button>
+      </form>
+
+      <div class="shortened-list">
+        <h3>Shortened URLs</h3>
+        <ul>
+          <% links.map(({ shortCode, url }) => { %>
+            <% if (url) { %>
+              <% const truncatedURL = url.length >= 30 ? `${url.slice(0, 30)}...` : url; %>
+              <li>
+                <a href="/<%= shortCode %>" target="_blank">
+                  <%= host %>/<%= shortCode %>
+                </a>
+                <p><small>Original: <%= truncatedURL %></small></p>
+              </li>
+            <% } %>
+          <% }) %>
+        </ul>
+      </div>
     </div>
+  </main>
 
-    <script>
-        //ye saari bkchodi sirf node me express me ye khaali pda hai
-    //     const fetchShortenedURL = async () => {
-    //         const response = await fetch("/links");
-    //         const links = await response.json();
-    //         console.log("links", links);
-
-    //         const list = document.getElementById("shortened-urls");
-    //         list.innerHTML = "";
-
-    //         for (const [shortCode, url] of Object.entries(links)) {
-    //             const li = document.createElement("li");
-    //             const truncatedURL = url.length > 30 ? `${url.slice(0, 30)}...` : url;
-    //             li.innerHTML = `<a href="/${shortCode}" target="_blank">${window.location.origin}/${shortCode}</a> → ${truncatedURL}`;
-    //             list.appendChild(li);
-    //         }
-    //     };
-
-
-    //     document.getElementById('shorten-form')
-    // .addEventListener('submit', async (event) => {
-    //     event.preventDefault();
-
-    //     const formData = new FormData(event.target);
-    //     const url = formData.get('url');
-    //     const shortCode = formData.get('shortCode');
-
-    //     console.log(url, shortCode);
-
-    //     try {
-    //         const response = await fetch("/shorten", {
-    //             method: "POST",
-    //             headers: {
-    //                 "Content-Type": "application/json"
-    //             },
-    //             body: JSON.stringify({ url, shortCode })
-    //         });
-
-    //         if (response.ok) {
-    //             fetchShortenedURL();
-    //             alert("Form submitted successfully");
-    //             event.target.reset();
-    //         }
-    //         else{
-    //             const errorMessage = await response.text();
-    //             alert(errorMessage);
-    //         }
-    //     } catch (error) {
-    //         console.error("Error:", error);
-    //     }
-    // });
-
-
-    //    fetchShortenedURL();
-
-    </script>
 </body>
-
 </html>

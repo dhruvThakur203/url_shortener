@@ -1,6 +1,6 @@
 import { readFile, writeFile } from "fs/promises";
 import { Router } from "express";
-import { postURLShortener,getShortener,redirectToShortLink  } from "../contollers/postshortener.controller.js";
+import { postURLShortener,getShortener,redirectToShortLink  } from "../controllers/postshortener.controller.js";
 
 const router = Router();
 
